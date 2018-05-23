@@ -4,6 +4,7 @@
 
 export const environment = {
   SERVER_URL: `./`,
+  API_SERVER: 'http://172.20.8.24/',
   production: false,
   useHash: true,
 };
@@ -15,4 +16,3 @@ export const environment = {
  * because it will have performance impact when throw error
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
