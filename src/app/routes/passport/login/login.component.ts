@@ -109,84 +109,85 @@ export class UserLoginComponent implements OnDestroy {
       if (this.mobile.invalid || this.captcha.invalid) return;
     }
 
-    let userType: String = '1';
-    if (this.status.value === '代理商') {
-      userType = '2';
-    }
-    const param: HttpParams = new HttpParams();
-    // param.append('account', '1');
-    // param.append('password', '1');
-    // param.append('type', '1');
-    this.loading = true;
-    this.http
-      .post(
-        'BoardSystem/BLL/Login/LoginWebService.asmx/Login',
-        {
-          account: this.userName.value,
-          password: this.password.value,
-          type: userType,
-        },
-        {},
-        {
-          headers: {
-            Accept: 'text/html,application/xhtml+xml,application/xml;',
-            'Content-Type': 'application/json',
-          },
-          responseType: 'text',
-        },
-      )
-      .subscribe(res => {
-        console.log(res);
-        this.loading = false;
-        const ret = JSON.parse(res);
-        if (ret['IsOK'] === true) {
-          // 清空路由复用信息
-          this.reuseTabService.clear();
-          // 设置Token信息
-          this.tokenService.set({
-            token: '123456789',
-            name: this.userName.value,
-            email: `cipchk@qq.com`,
-            id: 10000,
-            time: +new Date(),
-          });
-          // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-          // this.startupSrv.load().then(() => this.router.navigate(['/']));
-          // 否则直接跳转
-          this.router.navigate(['/']);
-        } else {
-          this.error = ret['Description'];
-        }
-      });
-    // mock http
+    // 正式请求
+    // let userType: String = '1';
+    // if (this.status.value === '代理商') {
+    //   userType = '2';
+    // }
+    // const param: HttpParams = new HttpParams();
+    // // param.append('account', '1');
+    // // param.append('password', '1');
+    // // param.append('type', '1');
     // this.loading = true;
-    // setTimeout(() => {
-    //   this.loading = false;
-    //   if (this.type === 0) {
-    //     if (
-    //       this.userName.value !== 'admin' ||
-    //       this.password.value !== '888888'
-    //     ) {
-    //       this.error = `账户或密码错误`;
-    //       return;
+    // this.http
+    //   .post(
+    //     'BoardSystem/BLL/Login/LoginWebService.asmx/Login',
+    //     {
+    //       account: this.userName.value,
+    //       password: this.password.value,
+    //       type: userType,
+    //     },
+    //     {},
+    //     {
+    //       headers: {
+    //         Accept: 'text/html,application/xhtml+xml,application/xml;',
+    //         'Content-Type': 'application/json',
+    //       },
+    //       responseType: 'text',
+    //     },
+    // )
+    //   .subscribe(res => {
+    //     console.log(res);
+    //     this.loading = false;
+    //     const ret = JSON.parse(res);
+    //     if (ret['IsOK'] === true) {
+    //       // 清空路由复用信息
+    //       this.reuseTabService.clear();
+    //       // 设置Token信息
+    //       this.tokenService.set({
+    //         token: '123456789',
+    //         name: this.userName.value,
+    //         email: `cipchk@qq.com`,
+    //         id: 10000,
+    //         time: +new Date(),
+    //       });
+    //       // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+    //       // this.startupSrv.load().then(() => this.router.navigate(['/']));
+    //       // 否则直接跳转
+    //       this.router.navigate(['/']);
+    //     } else {
+    //       this.error = ret['Description'];
     //     }
-    //   }
-
-    //   // 清空路由复用信息
-    //   this.reuseTabService.clear();
-    //   // 设置Token信息
-    //   this.tokenService.set({
-    //     token: '123456789',
-    //     name: this.userName.value,
-    //     email: `cipchk@qq.com`,
-    //     id: 10000,
-    //     time: +new Date(),
     //   });
-    //   // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
-    //   // this.startupSrv.load().then(() => this.router.navigate(['/']));
-    //   // 否则直接跳转
-    //   this.router.navigate(['/']);
-    // }, 1000);
+    // mock http
+    this.loading = true;
+    setTimeout(() => {
+      this.loading = false;
+      if (this.type === 0) {
+        if (
+          this.userName.value !== 'admin' ||
+          this.password.value !== '888888'
+        ) {
+          this.error = `账户或密码错误`;
+          return;
+        }
+      }
+
+      // 清空路由复用信息
+      this.reuseTabService.clear();
+      // 设置Token信息
+      this.tokenService.set({
+        token: '123456789',
+        name: this.userName.value,
+        email: `cipchk@qq.com`,
+        id: 10000,
+        time: +new Date(),
+      });
+      // 重新获取 StartupService 内容，若其包括 User 有关的信息的话
+      // this.startupSrv.load().then(() => this.router.navigate(['/']));
+      // 否则直接跳转
+      this.router.navigate(['/']);
+    }, 1000);
   }
 
   // region: social
