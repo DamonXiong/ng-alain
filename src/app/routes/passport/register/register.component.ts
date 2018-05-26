@@ -7,11 +7,14 @@ import {
   FormControl,
 } from '@angular/forms';
 import { NzMessageService } from 'ng-zorro-antd';
+import { _HttpClient } from '@delon/theme';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'passport-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.less'],
+  providers: [_HttpClient],
 })
 export class UserRegisterComponent implements OnDestroy {
   form: FormGroup;
@@ -31,9 +34,12 @@ export class UserRegisterComponent implements OnDestroy {
     fb: FormBuilder,
     private router: Router,
     public msg: NzMessageService,
+    private http: _HttpClient,
   ) {
     this.form = fb.group({
       mail: [null, [Validators.email]],
+      account: [null, [Validators.required, Validators.minLength(5)]],
+      accountName: [null, [Validators.required, Validators.minLength(5)]],
       password: [
         null,
         [
@@ -52,7 +58,7 @@ export class UserRegisterComponent implements OnDestroy {
       ],
       mobilePrefix: ['+86'],
       mobile: [null, [Validators.required, Validators.pattern(/^1\d{10}$/)]],
-      captcha: [null, [Validators.required]],
+      // captcha: [null, [Validators.required]],
     });
   }
 
@@ -91,8 +97,14 @@ export class UserRegisterComponent implements OnDestroy {
   get mobile() {
     return this.form.controls.mobile;
   }
-  get captcha() {
-    return this.form.controls.captcha;
+  // get captcha() {
+  //   return this.form.controls.captcha;
+  // }
+  get account() {
+    return this.form.controls.account;
+  }
+  get accountName() {
+    return this.form.controls.accountName;
   }
 
   // endregion
@@ -119,12 +131,48 @@ export class UserRegisterComponent implements OnDestroy {
       this.form.controls[i].updateValueAndValidity();
     }
     if (this.form.invalid) return;
-    // mock http
+
+    const param: HttpParams = new HttpParams();
+    // param.append('account', '1');
+    // param.append('password', '1');
+    // param.append('type', '1');
     this.loading = true;
-    setTimeout(() => {
-      this.loading = false;
-      this.router.navigate(['/passport/register-result']);
-    }, 1000);
+    this.http
+      .post(
+        'BoardSystem/BLL/Login/LoginWebService.asmx/CreateEngineer',
+        {
+          account: this.account.value,
+          accountName: this.accountName.value,
+          password: this.password.value,
+          phoneNo: this.mobile.value,
+          mailAddress: this.mail.value,
+          wechatAccount: 'dfdsajfdakfaljfda',
+        },
+        {},
+        {
+          headers: {
+            Accept: 'text/html,application/xhtml+xml,application/xml;',
+            'Content-Type': 'application/json',
+          },
+          responseType: 'text',
+        },
+      )
+      .subscribe(res => {
+        console.log(res);
+        this.loading = false;
+        const ret = JSON.parse(res);
+        if (ret['IsOK'] === true) {
+          this.router.navigate(['/passport/register-result']);
+        } else {
+          this.error = ret['Description'];
+        }
+      });
+    // mock http
+    // this.loading = true;
+    // setTimeout(() => {
+    //   this.loading = false;
+    //   this.router.navigate(['/passport/register-result']);
+    // }, 1000);
   }
 
   ngOnDestroy(): void {

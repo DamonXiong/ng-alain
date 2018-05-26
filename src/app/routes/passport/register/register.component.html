@@ -3,6 +3,22 @@
   <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
   <nz-form-item>
     <nz-form-control>
+      <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user">
+        <input nz-input formControlName="account" placeholder="请输入账号">
+      </nz-input-group>
+      <nz-form-explain *ngIf="account.dirty && account.errors">请输入登录账号且至少五个字符！</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
+      <nz-input-group nzSize="large" nzPrefixIcon="anticon anticon-user">
+        <input nz-input formControlName="accountName" placeholder="请输入用户名">
+      </nz-input-group>
+      <nz-form-explain *ngIf="accountName.dirty && accountName.errors">请输入账户名且至少五个字符！</nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-control>
       <nz-input-group nzSize="large" nzAddonBeforeIcon="anticon anticon-user">
         <input nz-input formControlName="mail" placeholder="邮箱">
       </nz-input-group>
@@ -61,7 +77,7 @@
       <nz-form-explain *ngIf="mobile.dirty && mobile.errors">请输入手机号！</nz-form-explain>
     </nz-form-control>
   </nz-form-item>
-  <nz-form-item>
+  <!-- <nz-form-item>
     <nz-form-control>
       <nz-row [nzGutter]="8">
         <nz-col [nzSpan]="16">
@@ -75,7 +91,7 @@
         </nz-col>
       </nz-row>
     </nz-form-control>
-  </nz-form-item>
+  </nz-form-item> -->
   <nz-form-item>
     <button nz-button nzType="primary" nzSize="large" type="submit" [nzLoading]="loading" class="submit">
       <span>注册</span>
