@@ -146,7 +146,7 @@ export class UserRegisterComponent implements OnDestroy {
           password: this.password.value,
           phoneNo: this.mobile.value,
           mailAddress: this.mail.value,
-          wechatAccount: 'dfdsajfdakfaljfda',
+          weChatAccount: 'dfdsajfdakfaljfda',
         },
         {},
         {
@@ -162,7 +162,9 @@ export class UserRegisterComponent implements OnDestroy {
         this.loading = false;
         const ret = JSON.parse(res);
         if (ret['IsOK'] === true) {
-          this.router.navigate(['/passport/register-result']);
+          this.router.navigate(['/passport/register-result'], {
+            queryParams: { mailaddr: this.mail.value },
+          });
         } else {
           this.error = ret['Description'];
         }

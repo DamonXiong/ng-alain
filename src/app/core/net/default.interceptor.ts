@@ -50,17 +50,13 @@ export class DefaultInterceptor implements HttpInterceptor {
           if (body) {
             const jsonBody: JSON = JSON.parse(body);
             if (jsonBody && jsonBody['d']) {
-              if (jsonBody['d']['IsOK'] !== true) {
-                this.msg.error(jsonBody['d']['Description']);
-              } else {
-                return of(
-                  new HttpResponse(
-                    Object.assign(event, {
-                      body: JSON.stringify(jsonBody['d']),
-                    }),
-                  ),
-                );
-              }
+              return of(
+                new HttpResponse(
+                  Object.assign(event, {
+                    body: JSON.stringify(jsonBody['d']),
+                  }),
+                ),
+              );
             }
           }
         }

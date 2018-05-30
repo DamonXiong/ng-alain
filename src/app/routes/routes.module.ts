@@ -11,6 +11,7 @@ import { DashboardWorkplaceComponent } from './dashboard/workplace/workplace.com
 import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterComponent } from './passport/register/register.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
+import { UserRegisterResultFailComponent } from './passport/register-result-fail/register-result-fail.component';
 // single pages
 import { UserLockComponent } from './passport/lock/lock.component';
 import { CallbackComponent } from './callback/callback.component';
@@ -27,18 +28,19 @@ const COMPONENTS = [
   UserLoginComponent,
   UserRegisterComponent,
   UserRegisterResultComponent,
+  UserRegisterResultFailComponent,
   // single pages
   UserLockComponent,
   CallbackComponent,
   Exception403Component,
   Exception404Component,
-  Exception500Component
+  Exception500Component,
 ];
 const COMPONENTS_NOROUNT = [];
 
 @NgModule({
   imports: [SharedModule, RouteRoutingModule],
   declarations: [...COMPONENTS, ...COMPONENTS_NOROUNT],
-  entryComponents: COMPONENTS_NOROUNT
+  entryComponents: COMPONENTS_NOROUNT,
 })
 export class RoutesModule {}

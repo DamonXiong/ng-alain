@@ -14,6 +14,7 @@ import { DashboardWorkplaceComponent } from './dashboard/workplace/workplace.com
 import { UserLoginComponent } from './passport/login/login.component';
 import { UserRegisterComponent } from './passport/register/register.component';
 import { UserRegisterResultComponent } from './passport/register-result/register-result.component';
+import { UserRegisterResultFailComponent } from './passport/register-result-fail/register-result-fail.component';
 // single pages
 import { CallbackComponent } from './callback/callback.component';
 import { UserLockComponent } from './passport/lock/lock.component';
@@ -68,6 +69,11 @@ const routes: Routes = [
       {
         path: 'register-result',
         component: UserRegisterResultComponent,
+        data: { title: '注册结果', titleI18n: 'pro-register-result' },
+      },
+      {
+        path: 'register-fail',
+        component: UserRegisterResultFailComponent,
         data: { title: '注册结果', titleI18n: 'pro-register-result' },
       },
     ],
