@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'passport-register-result-fail',
   templateUrl: './register-result-fail.component.html',
-  styleUrls: ['./register-result-fail.component.less'],
 })
 export class UserRegisterResultFailComponent {
   public mailAddress: any;
