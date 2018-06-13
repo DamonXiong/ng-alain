@@ -13,7 +13,7 @@ import { ReuseTabService } from '@delon/abc';
 import { environment } from '@env/environment';
 import { StartupService } from '@core/startup/startup.service';
 import { _HttpClient } from '@delon/theme';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 @Component({
   selector: 'passport-login',
@@ -147,6 +147,7 @@ export class UserLoginComponent implements OnDestroy {
           this.tokenService.set({
             token: '123456789',
             name: this.userName.value,
+            password: this.password.value,
             email: `cipchk@qq.com`,
             id: 10000,
             time: +new Date(),
