@@ -7,6 +7,7 @@ import { BasicFormComponent } from './form/basic-form/basic-form.component';
 import { ProTableListComponent } from './list/table-list/table-list.component';
 import { ProBasicListComponent } from './list/basic-list/basic-list.component';
 import { ProCardListComponent } from './list/card-list/card-list.component';
+import { ProSetValueListComponent } from './list/setvalue-list/setvalue-list.component';
 import { ProListArticlesComponent } from './list/articles/articles.component';
 import { ProListProjectsComponent } from './list/projects/projects.component';
 import { ProListApplicationsComponent } from './list/applications/applications.component';
@@ -31,6 +32,7 @@ const routes: Routes = [
       { path: 'table-list', component: ProTableListComponent },
       { path: 'basic-list', component: ProBasicListComponent },
       { path: 'card-list', component: ProCardListComponent },
+      { path: 'setvalue-list', component: ProSetValueListComponent },
       {
         path: '',
         component: ProListLayoutComponent,

@@ -13,6 +13,7 @@ import { AdvancedFormComponent } from './form/advanced-form/advanced-form.compon
 import { ProTableListComponent } from './list/table-list/table-list.component';
 import { ProBasicListComponent } from './list/basic-list/basic-list.component';
 import { ProCardListComponent } from './list/card-list/card-list.component';
+import { ProSetValueListComponent } from './list/setvalue-list/setvalue-list.component';
 import { ProListLayoutComponent } from './list/list/list.component';
 import { ProListArticlesComponent } from './list/articles/articles.component';
 import { ProListProjectsComponent } from './list/projects/projects.component';
@@ -33,6 +34,7 @@ const COMPONENTS_NOROUNT = [Step1Component, Step2Component, Step3Component];
     ProTableListComponent,
     ProBasicListComponent,
     ProCardListComponent,
+    ProSetValueListComponent,
     ProListLayoutComponent,
     ProListArticlesComponent,
     ProListProjectsComponent,
