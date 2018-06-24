@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -8,17 +8,30 @@ import { Router } from '@angular/router';
   templateUrl: './register-result.component.html',
   styleUrls: ['./register-result.component.less'],
 })
-export class UserRegisterResultComponent {
+export class UserRegisterResultComponent implements OnInit {
   public mailAddress: any;
+  public isConfirm: boolean;
+  public desc: string;
+
   constructor(
     public route: ActivatedRoute,
     private router: Router,
     public msg: NzMessageService,
   ) {}
 
-  OnInit() {
+  ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.mailAddress = params['mailaddr'];
+      this.isConfirm =
+        params['isconfirm'] === true || params['isconfirm'] === 'true'
+          ? true
+          : false;
+
+      if (this.isConfirm) {
+        this.desc = '';
+      } else {
+        this.desc = '';
+      }
     });
   }
 

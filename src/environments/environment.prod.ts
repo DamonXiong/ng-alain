@@ -1,6 +1,6 @@
 export const environment = {
   SERVER_URL: `./`,
-  API_SERVER: 'http://172.20.8.24/',
+  API_SERVER: 'http://39.108.82.159/',
   production: true,
   useHash: true,
 };
