@@ -23,26 +23,12 @@
       </nz-col>
     </nz-row>
   </form>
-  <button nz-button (click)="add()" [nzType]="'primary'">
+  <button nz-button (click)="add(modalContent)" [nzType]="'primary'">
     <i class="anticon anticon-plus"></i>
     <span>新建</span>
   </button>
-  <button nz-button class="ml-sm" (click)="commit()" [nzType]="'primary'">
-    <i class="anticon anticon-edit"></i>
-    <span>提交</span>
-  </button>
   <ng-container *ngIf="selectedRows.length > 0">
-    <button nz-button class="ml-sm">批量操作</button>
-    <nz-dropdown [nzPlacement]="'bottomLeft'">
-      <button nz-button nz-dropdown class="ml-sm">
-        更多操作
-        <i class="anticon anticon-down"></i>
-      </button>
-      <ul nz-menu>
-        <li nz-menu-item (click)="remove()">删除</li>
-        <li nz-menu-item (click)="approval()">批量审批</li>
-      </ul>
-    </nz-dropdown>
+    <button nz-button class="ml-sm">删除</button>
   </ng-container>
   <div class="my-md">
     <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
@@ -55,17 +41,25 @@
   </div>
   <simple-table #st [columns]="columns" [showPagination]="true" [pageSizeOptions]="[1,10,20,30,40,50,100  ]" [showSizeChanger]="true"
     [data]="data" [loading]="loading" (checkboxChange)="checkboxChange($event)" (filterChange)="getData()">
-    <ng-template st-row="custom-no" let-item>
-        <input nz-input [(ngModel)]="item.no" oninput="checkNo(this.value)">
-    </ng-template>
-    <ng-template st-row="custom-value" let-item>
-        <input nz-input [(ngModel)]="item.value">
-    </ng-template>
-    <ng-template st-row="custom-value" let-item>
-        <input nz-input [(ngModel)]="item.value">
-    </ng-template>
-    <ng-template st-row="custom-description" let-item>
-        <input nz-input [(ngModel)]="item.description">
-    </ng-template>
   </simple-table>
 </nz-card>
+<ng-template #modalContent>
+  <nz-form-item>
+    <nz-form-label nzFor="item.key">参数项</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="item.key" name="key" placeholder="请输入" id="key">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="item.value">参数值</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="item.value" name="value" placeholder="请输入" id="value">
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzFor="item.remark">备注</nz-form-label>
+    <nz-form-control>
+      <input nz-input [(ngModel)]="item.remark" name="remark" placeholder="请输入" id="remark">
+    </nz-form-control>
+  </nz-form-item>
+</ng-template>

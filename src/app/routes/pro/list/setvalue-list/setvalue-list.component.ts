@@ -21,22 +21,33 @@ export class ProSetValueListComponent implements OnInit {
   data: any[] = [];
   loading = false;
   @ViewChild('st') st: SimpleTableComponent;
+  @ViewChild('modalContent') modalContent: TemplateRef<any>;
   columns: SimpleTableColumn[] = [
     { title: '', index: 'no', type: 'checkbox' },
-    { title: '参数项', index: 'key', render: 'custom-no' },
-    { title: '参数值', index: 'value', render: 'custom-value' },
-    { title: '备注', index: 'remark', render: 'custom-description' },
+    { title: '参数项', index: 'key' },
+    { title: '参数值', index: 'value', width: '50%' },
+    { title: '备注', index: 'remark' },
     {
       title: '更新时间',
       index: 'updatedAt',
       type: 'date',
       sorter: (a: any, b: any) => a.updatedAt - b.updatedAt,
     },
+    {
+      title: '操作',
+      buttons: [
+        {
+          text: '配置',
+          click: (item: any) => this.update(item, this.modalContent),
+        },
+      ],
+    },
   ];
   selectedRows: SimpleTableData[] = [];
   description = '';
   totalCallNo = 0;
   expandForm = false;
+  item = { key: '', value: '', remark: '' };
 
   constructor(
     private http: _HttpClient,
@@ -50,6 +61,7 @@ export class ProSetValueListComponent implements OnInit {
 
   getData() {
     this.loading = true;
+    const thisObj = this;
     this.http
       .post(
         'BoardSystem/BLL/Login/LoginWebService.asmx/GetSysParams',
@@ -60,21 +72,59 @@ export class ProSetValueListComponent implements OnInit {
         {
           headers: {
             Accept: 'text/html,application/xhtml+xml,application/xml;',
-            'Content-Type': 'application/xml',
+            'Content-Type': 'application/json',
           },
           responseType: 'text',
         },
       )
       .subscribe(res => {
         console.log(res);
-        this.loading = false;
+        thisObj.loading = false;
         const ret = JSON.parse(res);
         if (ret['IsOK'] === true) {
-          this.data = ret['ExtData'];
+          thisObj.data = JSON.parse(ret['ExtData']);
         } else {
-          this.msg.error(ret['Description']);
+          thisObj.msg.error(ret['Description']);
         }
       });
+  }
+
+  update(item: any, tpl: TemplateRef<{}>) {
+    console.log(tpl);
+    this.item = item;
+    const thisObj = this;
+    this.modalSrv.create({
+      nzTitle: '配置规则',
+      nzContent: tpl,
+      nzOnOk: () => {
+        this.loading = true;
+        this.http
+          .post(
+            'BoardSystem/BLL/Login/LoginWebService.asmx/SetSysParams',
+            {
+              key: this.item.key,
+              value: this.item.value,
+              remark: this.item.remark,
+            },
+            {},
+            {
+              headers: {
+                Accept: 'text/html,application/xhtml+xml,application/xml;',
+                'Content-Type': 'application/json',
+              },
+              responseType: 'text',
+            },
+          )
+          .subscribe(ret => {
+            thisObj.loading = false;
+            if (ret['IsOK'] === true) {
+              this.getData();
+            } else {
+              thisObj.msg.error(ret['Description']);
+            }
+          });
+      },
+    });
   }
 
   checkboxChange(list: SimpleTableData[]) {
@@ -98,20 +148,43 @@ export class ProSetValueListComponent implements OnInit {
     this.msg.success(`审批了 ${this.selectedRows.length} 笔`);
   }
 
-  add() {
-    // console.log(tpl);
-    // this.modalSrv.create({
-    //   nzTitle: '新建规则',
-    //   nzContent: tpl,
-    //   nzOnOk: () => {
-    //     this.loading = true;
-    //     this.http
-    //       .post('/param', { description: this.description })
-    //       .subscribe(() => {
-    //         this.getData();
-    //       });
-    //   },
-    // });
+  add(tpl: TemplateRef<{}>) {
+    console.log(tpl);
+    const thisObj = this;
+    this.item = { key: '', value: '', remark: '' };
+    this.modalSrv.create({
+      nzTitle: '新建规则',
+      nzContent: tpl,
+      nzOnOk: () => {
+        this.loading = true;
+        this.http
+          .post(
+            'BoardSystem/BLL/Login/LoginWebService.asmx/SetSysParams',
+            {
+              key: this.item.key,
+              value: this.item.value,
+              remark: this.item.remark,
+            },
+            {},
+            {
+              headers: {
+                Accept: 'text/html,application/xhtml+xml,application/xml;',
+                'Content-Type': 'application/json',
+              },
+              responseType: 'text',
+            },
+          )
+          .subscribe(res => {
+            const ret = JSON.parse(res);
+            thisObj.loading = false;
+            if (ret['IsOK'] === true) {
+              this.getData();
+            } else {
+              thisObj.msg.error(ret['Description']);
+            }
+          });
+      },
+    });
   }
   commit() {
     console.log(this.data);

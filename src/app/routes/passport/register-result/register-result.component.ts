@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 export class UserRegisterResultComponent implements OnInit {
   public mailAddress: any;
   public isConfirm: boolean;
-  public desc: string;
 
   constructor(
     public route: ActivatedRoute,
@@ -26,12 +25,6 @@ export class UserRegisterResultComponent implements OnInit {
         params['isconfirm'] === true || params['isconfirm'] === 'true'
           ? true
           : false;
-
-      if (this.isConfirm) {
-        this.desc = '';
-      } else {
-        this.desc = '';
-      }
     });
   }
 
