@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   selector: 'passport-register-result-fail',
   templateUrl: './register-result-fail.component.html',
 })
-export class UserRegisterResultFailComponent {
+export class UserRegisterResultFailComponent implements OnInit {
   public mailAddress: any;
   constructor(
     public route: ActivatedRoute,
@@ -15,7 +15,7 @@ export class UserRegisterResultFailComponent {
     public msg: NzMessageService,
   ) {}
 
-  OnInit() {
+  ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.mailAddress = params['mailaddr'];
     });
