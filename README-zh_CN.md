@@ -24,7 +24,7 @@ ng add ng-alain
 ng serve
 ```
 
-请参考[命令行工具](http://ng-alain.com/docs/cli)了解更多细节。
+请参考[命令行工具](http://ng-alain.com/cli)了解更多细节。
 
 ### 直接 clone git 仓库
 
@@ -83,16 +83,14 @@ npm run serve:hmr
 + 基于 `ng-zorro-antd`
 + 响应式
 + 国际化
-+ ACL访问控制
++ 基建类库 [@delon](https://github.com/cipchk/delon)（包括：业务组件、ACL访问控制、缓存、授权、动态表单等）
 + 延迟加载及良好的启用画面
 + 良好的UI路由设计
-+ 十种颜色版本
++ 定制主题
 + Less预编译
 + 良好的目录组织结构
 + 简单升级
-+ 模块热替换
 + 支持Docker部署
-+ 支持[Electron](http://ng-alain.com/docs/cli#electron)打包（限cli构建）
 
 ## 应用截图
 

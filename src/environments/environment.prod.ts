@@ -3,4 +3,5 @@ export const environment = {
   API_SERVER: 'http://39.108.82.159/',
   production: true,
   useHash: true,
+  hmr: false,
 };
