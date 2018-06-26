@@ -196,6 +196,12 @@
               "shortcut": true
             },
             {
+              "text": "Set Value List",
+              "link": "/pro/list/setvalue-list",
+              "i18n": "pro-setvalue-list",
+              "shortcut": true
+            },
+            {
               "text": "Basic List",
               "link": "/pro/list/basic-list",
               "i18n": "pro-basic-list"

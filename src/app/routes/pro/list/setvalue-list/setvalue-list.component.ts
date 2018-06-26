@@ -9,7 +9,7 @@ import {
 } from '@delon/abc';
 
 @Component({
-  selector: 'app-setvalue-list',
+  selector: 'pro-setvalue-list',
   templateUrl: './setvalue-list.component.html',
 })
 export class ProSetValueListComponent implements OnInit {
