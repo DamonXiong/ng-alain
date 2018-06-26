@@ -23,7 +23,6 @@ export class ProSetValueListComponent implements OnInit {
   @ViewChild('st') st: SimpleTableComponent;
   @ViewChild('modalContent') modalContent: TemplateRef<any>;
   columns: SimpleTableColumn[] = [
-    { title: '', index: 'no', type: 'checkbox' },
     { title: '参数项', index: 'key' },
     { title: '参数值', index: 'value', width: '50%' },
     { title: '备注', index: 'remark' },
@@ -39,6 +38,9 @@ export class ProSetValueListComponent implements OnInit {
         {
           text: '配置',
           click: (item: any) => this.update(item, this.modalContent),
+        },{
+          text: '删除',
+          click: (item: any) => this.remove(item),
         },
       ],
     },
@@ -53,7 +55,7 @@ export class ProSetValueListComponent implements OnInit {
     private http: _HttpClient,
     public msg: NzMessageService,
     private modalSrv: NzModalService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getData();
@@ -76,9 +78,8 @@ export class ProSetValueListComponent implements OnInit {
           },
           responseType: 'text',
         },
-      )
+    )
       .subscribe(res => {
-        console.log(res);
         thisObj.loading = false;
         const ret = JSON.parse(res);
         if (ret['IsOK'] === true) {
@@ -90,9 +91,7 @@ export class ProSetValueListComponent implements OnInit {
   }
 
   update(item: any, tpl: TemplateRef<{}>) {
-    console.log(tpl);
     this.item = item;
-    const thisObj = this;
     this.modalSrv.create({
       nzTitle: '配置规则',
       nzContent: tpl,
@@ -100,7 +99,7 @@ export class ProSetValueListComponent implements OnInit {
         this.loading = true;
         this.http
           .post(
-            'BoardSystem/BLL/Login/LoginWebService.asmx/SetSysParams',
+            'BoardSystem/BLL/Login/LoginWebService.asmx/UpdateSysParams',
             {
               key: this.item.key,
               value: this.item.value,
@@ -114,13 +113,14 @@ export class ProSetValueListComponent implements OnInit {
               },
               responseType: 'text',
             },
-          )
-          .subscribe(ret => {
-            thisObj.loading = false;
+        )
+          .subscribe(res => {
+            this.loading = false;
+            const ret = JSON.parse(res);
             if (ret['IsOK'] === true) {
               this.getData();
             } else {
-              thisObj.msg.error(ret['Description']);
+              this.msg.error(ret['Description']);
             }
           });
       },
@@ -135,22 +135,36 @@ export class ProSetValueListComponent implements OnInit {
     );
   }
 
-  remove() {
+  remove(item: any) {
+    this.loading = true;
     this.http
-      .delete('/param', { nos: this.selectedRows.map(i => i.no).join(',') })
-      .subscribe(() => {
-        this.getData();
-        this.st.clearCheck();
+      .post(
+        'BoardSystem/BLL/Login/LoginWebService.asmx/DelSysParams',
+        {
+          key: item.key,
+        },
+        {},
+        {
+          headers: {
+            Accept: 'text/html,application/xhtml+xml,application/xml;',
+            'Content-Type': 'application/json',
+          },
+          responseType: 'text',
+        },
+    )
+      .subscribe(res => {
+        const ret = JSON.parse(res);
+        this.loading = false;
+        if (ret['IsOK'] === true) {
+          this.getData();
+          this.st.clearCheck();
+        } else {
+          this.msg.error(ret['Description']);
+        }
       });
   }
 
-  approval() {
-    this.msg.success(`审批了 ${this.selectedRows.length} 笔`);
-  }
-
   add(tpl: TemplateRef<{}>) {
-    console.log(tpl);
-    const thisObj = this;
     this.item = { key: '', value: '', remark: '' };
     this.modalSrv.create({
       nzTitle: '新建规则',
@@ -159,7 +173,7 @@ export class ProSetValueListComponent implements OnInit {
         this.loading = true;
         this.http
           .post(
-            'BoardSystem/BLL/Login/LoginWebService.asmx/SetSysParams',
+            'BoardSystem/BLL/Login/LoginWebService.asmx/AddSysParams',
             {
               key: this.item.key,
               value: this.item.value,
@@ -173,30 +187,17 @@ export class ProSetValueListComponent implements OnInit {
               },
               responseType: 'text',
             },
-          )
+        )
           .subscribe(res => {
             const ret = JSON.parse(res);
-            thisObj.loading = false;
+            this.loading = false;
             if (ret['IsOK'] === true) {
               this.getData();
             } else {
-              thisObj.msg.error(ret['Description']);
+              this.msg.error(ret['Description']);
             }
           });
       },
     });
-  }
-  commit() {
-    console.log(this.data);
-  }
-
-  reset(ls: any[]) {
-    for (const item of ls) item.value = false;
-    this.getData();
-  }
-
-  checkNo(value: any) {
-    console.log(value);
-    this.data.includes(value);
   }
 }
