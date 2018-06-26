@@ -32,7 +32,10 @@ const routes: Routes = [
       { path: 'table-list', component: ProTableListComponent },
       { path: 'basic-list', component: ProBasicListComponent },
       { path: 'card-list', component: ProCardListComponent },
-      { path: 'setvalue-list', component: ProSetValueListComponent },
+      {
+        path: 'setvalue-list', component: ProSetValueListComponent,
+        data: { title: '设置参数', titleI18n: 'pro-setvalue' },
+      },
       {
         path: '',
         component: ProListLayoutComponent,
@@ -64,4 +67,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ProRoutingModule {}
+export class ProRoutingModule { }
