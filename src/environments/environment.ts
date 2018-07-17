@@ -4,7 +4,7 @@
 
 export const environment = {
   SERVER_URL: `./`,
-  API_SERVER: 'http://39.108.82.159/',
+  API_SERVER: 'http://39.108.82.159:1000/',
   production: false,
   useHash: true,
   hmr: false,

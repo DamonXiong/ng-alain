@@ -3,7 +3,7 @@
     <nz-tab nzTitle="账户密码登录">
       <nz-alert *ngIf="error" [nzType]="'error'" [nzMessage]="error" [nzShowIcon]="true" class="mb-lg"></nz-alert>
 
-      <nz-form-item>
+      <nz-form-item *ngIf="false">
         <nz-form-label nzFor="status">登录类型</nz-form-label>
         <nz-form-control>
           <nz-select formControlName="status" name="userStatus" id="status">
